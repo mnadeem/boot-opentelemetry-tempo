@@ -8,10 +8,12 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
 import io.opentelemetry.extension.annotations.WithSpan;
 
+@Component
 public class FlightClient {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(FlightClient.class);
