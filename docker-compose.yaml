@@ -1,0 +1,42 @@
+version: "3.8"
+
+services:
+
+  tempo:
+    image: grafana/tempo:latest
+    command: ["-config.file=/etc/tempo.yaml"]
+    volumes:
+      - ./etc/tempo-local.yaml:/etc/tempo.yaml
+      - ./tempo-datatempo:/tmp/tempo
+    ports:
+      - "14268"  # jaeger ingest, Jaeger - Thrift HTTP
+      - "14250"  # Jaeger - GRPC
+      - "55680"  # OpenTelemetry
+      - "3100"   # tempo
+
+  tempo-query:
+    image: grafana/tempo-query:latest
+    command: ["--grpc-storage-plugin.configuration-file=/etc/tempo-query.yaml"]
+    volumes:
+      - ./etc/tempo-query.yaml:/etc/tempo-query.yaml
+    ports:
+      - "16686:16686"  # jaeger-ui
+    depends_on:
+      - tempo
+
+  boot-otel-tempo-provider1:
+    image: "mnadeem/boot-template-app:0.0.1-SNAPSHOT"
+    ports:
+      - "8090:8090"
+    depends_on:
+      - tempo
+
+  boot-otel-tempo-api:
+    image: "mnadeem/boot-greeting-app:0.0.1-SNAPSHOT"
+    ports:
+      - "8080:8080"
+    environment:
+      TEMPLATE_URL_BASE: "http://boot-otel-tempo-provider1:8090"
+    depends_on:
+      - boot-otel-tempo-provider1
+
