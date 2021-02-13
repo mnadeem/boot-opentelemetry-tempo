@@ -24,6 +24,31 @@ services:
     depends_on:
       - tempo
 
+  provider1-db:
+    image: postgres
+    restart: always
+    environment:
+      - POSTGRES_DB=provider1
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgrespassword
+      - PGDATA=/var/lib/postgresql/data/pgdata
+    ports:
+      - 9090:5432
+    volumes:
+      - ./boot-otel-tempo-provider1/db/data:/var/lib/postgresql
+      - ./boot-otel-tempo-provider1/db/scripts/init.sql:/docker-entrypoint-initdb.d/init.sql
+
+  pgadmin:
+    image: dpage/pgadmin4
+    depends_on:
+      - provider1-db
+    ports:
+      - 7070:80
+    environment:
+      PGADMIN_DEFAULT_EMAIL: pgadmin4@pgadmin.org
+      PGADMIN_DEFAULT_PASSWORD: admin
+    restart: unless-stopped
+
   boot-otel-tempo-provider1:
     image: "mnadeem/boot-template-app:0.0.1-SNAPSHOT"
     ports:
