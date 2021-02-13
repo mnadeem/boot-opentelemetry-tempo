@@ -1,7 +1,7 @@
 \c provider1
 
 
-CREATE TABLE books (
+CREATE TABLE flight (
   id              SERIAL PRIMARY KEY,
   origin CHAR(3) NOT NULL,
   destination CHAR(3) NOT NULL,
