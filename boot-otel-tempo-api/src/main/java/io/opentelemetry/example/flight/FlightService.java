@@ -24,8 +24,9 @@ public class FlightService {
 
 	public List<Flight> getFlights(String origin) {
 		LOGGER.info("Getting flights for {}", origin);
+		List<Flight> flights = this.flightClient.getFlights(origin);
 		doSomeWorkNewSpan();
-		return this.flightClient.getFlights(origin);
+		return flights;
 	}
 	
 	@WithSpan
