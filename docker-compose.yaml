@@ -7,7 +7,7 @@ services:
     command: ["-config.file=/etc/tempo.yaml"]
     volumes:
       - ./etc/tempo-local.yaml:/etc/tempo.yaml
-      - ./tempo-datatempo:/tmp/tempo
+      - ./tempo-data:/tmp/tempo
     ports:
       - "14268"  # jaeger ingest, Jaeger - Thrift HTTP
       - "14250"  # Jaeger - GRPC
