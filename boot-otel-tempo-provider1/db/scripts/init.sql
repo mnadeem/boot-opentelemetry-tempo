@@ -6,7 +6,7 @@ CREATE TABLE books (
   origin CHAR(3) NOT NULL,
   destination CHAR(3) NOT NULL,
   airline VARCHAR(40) NOT NULL,
-  departing timestamp NOT NULL,
+  departing timestamp NOT NULL
 );
 
 INSERT INTO
