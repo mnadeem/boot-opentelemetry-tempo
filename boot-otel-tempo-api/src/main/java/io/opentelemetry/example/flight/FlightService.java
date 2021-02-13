@@ -6,6 +6,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
+import io.opentelemetry.api.common.AttributeKey;
+import io.opentelemetry.api.common.Attributes;
+import io.opentelemetry.api.trace.Span;
+import io.opentelemetry.extension.annotations.WithSpan;
+
 @Service
 public class FlightService {
 	
@@ -19,6 +24,22 @@ public class FlightService {
 
 	public List<Flight> getFlights(String origin) {
 		LOGGER.info("Getting flights for {}", origin);
+		doSomeWorkNewSpan();
 		return this.flightClient.getFlights(origin);
 	}
+	
+	@WithSpan
+    private void doSomeWorkNewSpan() {
+		LOGGER.info("Doing some work In New span");
+        Span span = Span.current();
+ 
+        span.setAttribute("attribute.a2", "some value");
+ 
+        span.addEvent("app.processing2.start", atttributes("321"));
+        span.addEvent("app.processing2.end", atttributes("321"));
+    }
+ 
+    private Attributes atttributes(String id) {
+        return Attributes.of(AttributeKey.stringKey("app.id"), id);
+    }
 }
