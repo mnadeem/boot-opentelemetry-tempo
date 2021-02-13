@@ -1,5 +1,6 @@
 package io.opentelemetry.example.flight;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -15,8 +16,13 @@ public class FlightService {
 	private static final Logger LOGGER = LoggerFactory.getLogger(FlightService.class);
 
 	public List<Flight> getFlights(String origin) {
-		// TODO Auto-generated method stub
-		return null;
+		doSomeWorkNewSpan();
+		return buildFlights(origin);
+	}
+
+	private List<Flight> buildFlights(String origin) {
+		List<Flight> result = new ArrayList<Flight>();
+		return result;
 	}
 
 	@WithSpan

@@ -19,7 +19,7 @@ public class FlighController {
 		this.flightService = flightService;
 	}
 
-	@RequestMapping("/template")
+	@RequestMapping("/flights")
 	public List<Flight> flights(@RequestParam(value = "origin", defaultValue = "India") String origin) {
 		LOGGER.info("processing Request");
 		return flightService.getFlights(origin);		

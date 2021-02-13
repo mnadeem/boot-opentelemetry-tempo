@@ -9,5 +9,4 @@ public class BootOtelTempoApiApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(BootOtelTempoApiApplication.class, args);
 	}
-
 }
