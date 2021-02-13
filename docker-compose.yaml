@@ -50,14 +50,14 @@ services:
     restart: unless-stopped
 
   boot-otel-tempo-provider1:
-    image: "mnadeem/boot-template-app:0.0.1-SNAPSHOT"
+    image: "mnadeem/boot-otel-tempo-provider1:0.0.1-SNAPSHOT"
     ports:
       - "8090:8090"
     depends_on:
       - tempo
 
   boot-otel-tempo-api:
-    image: "mnadeem/boot-greeting-app:0.0.1-SNAPSHOT"
+    image: "mnadeem/boot-otel-tempo-api:0.0.1-SNAPSHOT"
     ports:
       - "8080:8080"
     environment:

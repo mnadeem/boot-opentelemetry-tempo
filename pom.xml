@@ -66,21 +66,7 @@
 							<goal>stop</goal>
 						</goals>
 					</execution>
-				</executions>
-				<configuration>
-			        <images>
-			            <image>	
-			            	<name>mnadeem/${project.artifactId}</name>		
-			                <build>
-			                    <dockerFile>${project.basedir}/Dockerfile</dockerFile>
-			                    <tags>
-							      	<tag>${project.version}</tag>
-                                	<tag>latest</tag>
-							    </tags>
-			                </build>
-			            </image>			
-			        </images>		        
-			    </configuration>
+				</executions>				
 			</plugin>
 		</plugins>
 	</build>
