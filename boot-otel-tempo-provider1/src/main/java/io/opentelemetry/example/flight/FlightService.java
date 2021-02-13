@@ -1,6 +1,7 @@
 package io.opentelemetry.example.flight;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -24,7 +25,17 @@ public class FlightService {
 
 	private List<Flight> buildFlights(String origin) {
 		List<Flight> result = new ArrayList<Flight>();
+		result.add(newFlight());
 		return result;
+	}
+
+	private Flight newFlight() {
+		Flight flight = new Flight();
+		flight.setAirline("Deltoid");
+		flight.setDepartureTime(new Date());
+		flight.setOrigin("SEA");
+		flight.setDestination("LAS");
+		return flight;
 	}
 
 	@WithSpan
