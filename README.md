@@ -31,3 +31,18 @@ docker stack deploy --compose-file docker-compose.yaml trace
 docker stack services trace
 docker stack rm trace
 ````
+# Tracing
+
+Access the endpoint
+
+![](docs/access-flights.png)
+
+Copy the trace id
+
+![](docs/trace-id.png)
+
+Get the trace information
+
+![](docs/jaeger-trace.png)
+
+
