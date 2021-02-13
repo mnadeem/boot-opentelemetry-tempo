@@ -1,0 +1,94 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<parent>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-parent</artifactId>
+		<version>2.4.2</version>
+		<relativePath /> <!-- lookup parent from repository -->
+	</parent>
+
+	<groupId>io.opentelemetry.example</groupId>
+	<artifactId>boot-opentelemetry-tempo</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	
+	<name>boot-opentelemetry-tempo</name>
+	<description>Project demonstrating OpenTelemetry Instrumentation</description>
+	<packaging>pom</packaging>
+
+	<properties>
+		<java.version>1.8</java.version>
+		<opentelemetry.version>0.15.0</opentelemetry.version>
+		<docker-maven-plugin.version>0.34.1</docker-maven-plugin.version>
+	</properties>
+
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>io.opentelemetry</groupId>
+				<artifactId>opentelemetry-bom</artifactId>
+				<version>${opentelemetry.version}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+				<configuration>
+					<skip>true</skip>
+				</configuration>
+			</plugin>
+
+			<plugin>
+				<groupId>io.fabric8</groupId>
+				<artifactId>docker-maven-plugin</artifactId>
+				<version>${docker-maven-plugin.version}</version>
+				<executions>
+					<execution>
+						<id>start</id>
+						<phase>pre-integration-test</phase>
+						<goals>
+							<goal>build</goal>
+							<goal>start</goal>
+						</goals>
+					</execution>
+					<execution>
+						<id>stop</id>
+						<phase>post-integration-test</phase>
+						<goals>
+							<goal>stop</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+			        <images>
+			            <image>	
+			            	<name>mnadeem/${project.artifactId}</name>		
+			                <build>
+			                    <dockerFile>${project.basedir}/Dockerfile</dockerFile>
+			                    <tags>
+							      	<tag>${project.version}</tag>
+                                	<tag>latest</tag>
+							    </tags>
+			                </build>
+			            </image>			
+			        </images>		        
+			    </configuration>
+			</plugin>
+		</plugins>
+	</build>
+	
+	<modules>
+		<module>boot-otel-tempo-docker</module>
+		<module>boot-otel-tempo-api</module>
+		<module>boot-otel-tempo-provider1</module>
+	</modules>
+
+</project>
