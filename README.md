@@ -3,7 +3,7 @@
 This is a demo project to demonstrate how we can integrate the following
 
 * [Opentelemetry](https://opentelemetry.io/)
-* [Grafan Tempo](https://grafana.com/oss/tempo/) Which internally utilized [Jaeger](https://www.jaegertracing.io/)
+* [Grafan Tempo](https://grafana.com/oss/tempo/) Which internally uses [Jaeger](https://www.jaegertracing.io/)
 * [Spring Boot Project](https://spring.io/projects/spring-boot)
 
 It basically integrates The following
