@@ -76,4 +76,5 @@ Get the trace information
 # Credits
 
 * [otel-demo](https://github.com/williewheeler/otel-demo)
+* [java-agent-spring-boot-example](https://github.com/objectiser/java-agent-spring-boot-example)
 
