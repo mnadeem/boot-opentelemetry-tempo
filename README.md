@@ -64,6 +64,16 @@ Get the trace information
 ![](docs/jaeger-trace.png)
 
 
+# Connecting To Internal DB
+
+![](docs/pgAdminlogin.png)
+
+![](docs/pgAdmingServer.png)
+
+![](docs/pgAdminDb.png)
+
+
 # Credits
 
 * [otel-demo](https://github.com/williewheeler/otel-demo)
+
