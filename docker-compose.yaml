@@ -33,7 +33,7 @@ services:
       - POSTGRES_PASSWORD=postgrespassword
       - PGDATA=/var/lib/postgresql/data/pgdata
     ports:
-      - 9090:5432
+      - 5432:5432
     volumes:
       - ./boot-otel-tempo-provider1/db/data:/var/lib/postgresql
       - ./boot-otel-tempo-provider1/db/scripts/init.sql:/docker-entrypoint-initdb.d/init.sql
@@ -70,3 +70,28 @@ services:
     depends_on:
       - boot-otel-tempo-provider1
 
+  prometheus:
+    image: prom/prometheus:latest
+    volumes:
+      - ./etc/prometheus.yaml:/etc/prometheus.yaml
+    entrypoint:
+      - /bin/prometheus
+      - --config.file=/etc/prometheus.yaml
+    ports:
+      - "9090:9090"
+    depends_on:
+      - boot-otel-tempo-api
+
+  grafana:
+    image: grafana/grafana:7.4.1
+    volumes:
+      - ./grafana-data/datasources:/etc/grafana/provisioning/datasources
+      - ./grafana-data/dashboards-provisioning:/etc/grafana/provisioning/dashboards
+    environment:
+      - GF_AUTH_ANONYMOUS_ENABLED=true
+      - GF_AUTH_ANONYMOUS_ORG_ROLE=Admin
+      - GF_AUTH_DISABLE_LOGIN_FORM=true
+    ports:
+      - "3000:3000"
+    depends_on:
+      - prometheus
