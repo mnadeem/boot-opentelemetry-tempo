@@ -69,6 +69,11 @@ Get the trace information Using **Jaeger**
 ![](docs/grafana-trace.png)
 
 
+# Prometheus Metrics
+
+![](docs/prometheus-metrics.png)
+
+
 # Connecting To Internal DB
 
 ![](docs/pgAdminlogin.png)
