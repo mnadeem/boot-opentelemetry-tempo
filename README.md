@@ -6,9 +6,14 @@ This is a demo project to demonstrate how we can integrate the following
 * [Grafan Tempo](https://grafana.com/oss/tempo/) Which internally utilized [Jaeger](https://www.jaegertracing.io/)
 * [Spring Boot Project](https://spring.io/projects/spring-boot)
 
+It basically integrates The following
+
+* [Prometheus](https://prometheus.io/) for monitoring and alerting
+* [Loki](https://grafana.com/oss/loki/) for Distributed Logging
+* [Tempo](https://grafana.com/oss/tempo/) for Distributed Tracing
+* [Grafan](https://grafana.com/) for visualization
+
 # Running
-
-
 
 Execute the following on root folder
 
