@@ -82,8 +82,22 @@ services:
     depends_on:
       - boot-otel-tempo-api
 
+  loki:
+    image: grafana/loki:2.1.0
+    command: -config.file=/etc/loki/loki-local.yaml
+    ports:
+      - "3101:3100"                                   # loki needs to be exposed so it receives logs
+    environment:
+      - JAEGER_AGENT_HOST=tempo
+      - JAEGER_ENDPOINT=http://tempo:14268/api/traces # send traces to Tempo
+      - JAEGER_SAMPLER_TYPE=const
+      - JAEGER_SAMPLER_PARAM=1
+    volumes:
+      - ./etc/loki-local.yaml:/etc/loki/loki-local.yaml
+      - ./loki-data:/tmp/loki
+
   grafana:
-    image: grafana/grafana:7.4.1
+    image: grafana/grafana:7.4.0-ubuntu
     volumes:
       - ./grafana-data/datasources:/etc/grafana/provisioning/datasources
       - ./grafana-data/dashboards-provisioning:/etc/grafana/provisioning/dashboards
@@ -96,3 +110,5 @@ services:
       - "3000:3000"
     depends_on:
       - prometheus
+      - tempo-query
+      - loki
