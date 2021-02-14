@@ -74,7 +74,7 @@ Get the trace information Using **Jaeger**
 ![](docs/prometheus-metrics.png)
 
 
-# Connecting To Internal DB
+# Connecting To PostgreSQL DB
 
 ![](docs/pgAdminlogin.png)
 
