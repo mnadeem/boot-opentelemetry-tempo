@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: Template
 metadata:
-  name: promtail
+  name: ${APP_NAME}
   annotations:
     "openshift.io/display-name": ${APP_NAME}
     description: |
@@ -42,7 +42,7 @@ objects:
           prometheus.io/path: "/metrics"
       spec:
         containers:
-          - name: promtail
+          - name: ${APP_NAME}
             image: ${IMAGE}
             ports:
               - name: metrics
