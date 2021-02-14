@@ -46,3 +46,6 @@ Get the trace information
 ![](docs/jaeger-trace.png)
 
 
+# Credits
+
+* [otel-demo}(https://github.com/williewheeler/otel-demo)
