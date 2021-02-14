@@ -7,7 +7,7 @@ metadata:
     description: |
       A Logging solution for an OpenShift cluster - collect and gather logs.
     iconClass: fa fa-cogs
-     tags: OTEL,${APP_NAME},template
+      tags: OTEL,${APP_NAME},template
 parameters:
   - name: APP_NAME
     description: "Value for app label."

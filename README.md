@@ -64,6 +64,11 @@ Get the trace information
 ![](docs/jaeger-trace.png)
 
 
+**Trace can be viewed in grafana as well**
+
+![](docs/grafana-trace.png)
+
+
 # Connecting To Internal DB
 
 ![](docs/pgAdminlogin.png)
