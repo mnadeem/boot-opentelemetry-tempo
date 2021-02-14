@@ -50,7 +50,7 @@ public class Provider1DbConfig {
 	@Primary
 	@Bean(name = "provider1EntityManagerFactory")
 	public LocalContainerEntityManagerFactoryBean entityManagerFactory(EntityManagerFactoryBuilder builder,
-			@Qualifier("cdrDataSource") DataSource dataSource) {
+			@Qualifier("provider1DataSource") DataSource dataSource) {
 		return builder.dataSource(dataSource).packages("io.opentelemetry.example.flight").persistenceUnit("provider1").build();
 
 	}
