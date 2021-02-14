@@ -48,4 +48,4 @@ Get the trace information
 
 # Credits
 
-* [otel-demo}(https://github.com/williewheeler/otel-demo)
+* [otel-demo](https://github.com/williewheeler/otel-demo)
