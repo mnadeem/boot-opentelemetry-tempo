@@ -7,7 +7,7 @@ services:
     command: ["-config.file=/etc/tempo.yaml"]
     volumes:
       - ./etc/tempo-local.yaml:/etc/tempo.yaml
-      - ./tempo-data:/tmp/tempo
+      - ./data/tempo-data:/tmp/tempo
     ports:
       - "14268"  # jaeger ingest, Jaeger - Thrift HTTP
       - "14250"  # Jaeger - GRPC
@@ -57,6 +57,8 @@ services:
       PROVIDER1_DB_URL: jdbc:postgresql://provider1-db:5432/provider1
       PROVIDER1_DB_USER: postgres
       PROVIDER1_DB_PASS: postgrespassword
+    volumes:
+      - ./data/logs:/app/logs
     depends_on:
       - tempo
       - provider1-db
@@ -67,8 +69,20 @@ services:
       - "8080:8080"
     environment:
       PROVIDER1_URL_BASE: "http://boot-otel-tempo-provider1:8090"
+    volumes:
+      - ./data/logs:/app/logs
     depends_on:
       - boot-otel-tempo-provider1
+
+  promtail:
+    image: grafana/promtail:master-ee9c629
+    command: -config.file=/etc/promtail/promtail-local.yaml
+    volumes:
+      - ./etc/promtail-local.yaml:/etc/promtail/promtail-local.yaml
+      - ./data/logs:/app/logs
+    depends_on:
+      - boot-otel-tempo-api
+      - loki
 
   prometheus:
     image: prom/prometheus:latest
@@ -94,14 +108,14 @@ services:
       - JAEGER_SAMPLER_PARAM=1
     volumes:
       - ./etc/loki-local.yaml:/etc/loki/loki-local.yaml
-      - ./loki-data:/tmp/loki
+      - ./data/loki-data:/tmp/loki
 
   grafana:
     image: grafana/grafana:7.4.0-ubuntu
     volumes:
-      - ./grafana-data/datasources:/etc/grafana/provisioning/datasources
-      - ./grafana-data/dashboards-provisioning:/etc/grafana/provisioning/dashboards
-      - ./grafana-data/dashboards:/var/lib/grafana/dashboards
+      - ./data/grafana-data/datasources:/etc/grafana/provisioning/datasources
+      - ./data/grafana-data/dashboards-provisioning:/etc/grafana/provisioning/dashboards
+      - ./data/grafana-data/dashboards:/var/lib/grafana/dashboards
     environment:
       - GF_AUTH_ANONYMOUS_ENABLED=true
       - GF_AUTH_ANONYMOUS_ORG_ROLE=Admin

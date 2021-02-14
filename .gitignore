@@ -31,5 +31,6 @@ build/
 
 ### VS Code ###
 .vscode/
-/tempo-data/
-/loki-data/
+/data/tempo-data/
+/data/loki-data/
+/data/logs/
