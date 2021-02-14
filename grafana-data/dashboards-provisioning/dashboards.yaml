@@ -10,3 +10,5 @@ providers:
   editable: true
   updateIntervalSeconds: 3600
   allowUiUpdates: false
+  options:
+    path: /var/lib/grafana/dashboards
