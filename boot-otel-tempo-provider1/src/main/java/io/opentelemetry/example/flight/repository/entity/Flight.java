@@ -1,4 +1,4 @@
-package io.opentelemetry.example.flight.repository;
+package io.opentelemetry.example.flight.repository.entity;
 
 import java.util.Date;
 

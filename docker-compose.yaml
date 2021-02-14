@@ -59,6 +59,7 @@ services:
       PROVIDER1_DB_PASS: postgrespassword
     depends_on:
       - tempo
+      - provider1-db
 
   boot-otel-tempo-api:
     image: "mnadeem/boot-otel-tempo-api:0.0.1-SNAPSHOT"

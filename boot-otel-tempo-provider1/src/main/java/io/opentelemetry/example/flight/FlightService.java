@@ -7,8 +7,8 @@ import org.springframework.stereotype.Service;
 import io.opentelemetry.api.common.AttributeKey;
 import io.opentelemetry.api.common.Attributes;
 import io.opentelemetry.api.trace.Span;
-import io.opentelemetry.example.flight.repository.Flight;
 import io.opentelemetry.example.flight.repository.FlightRepository;
+import io.opentelemetry.example.flight.repository.entity.Flight;
 import io.opentelemetry.extension.annotations.WithSpan;
 
 @Service
