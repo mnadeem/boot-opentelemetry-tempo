@@ -1,9 +1,5 @@
 package io.opentelemetry.example.flight;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -11,31 +7,24 @@ import org.springframework.stereotype.Service;
 import io.opentelemetry.api.common.AttributeKey;
 import io.opentelemetry.api.common.Attributes;
 import io.opentelemetry.api.trace.Span;
+import io.opentelemetry.example.flight.repository.Flight;
+import io.opentelemetry.example.flight.repository.FlightRepository;
 import io.opentelemetry.extension.annotations.WithSpan;
 
 @Service
 public class FlightService {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(FlightService.class);
+	
+	private FlightRepository flightRepository;
+	
+	public FlightService(FlightRepository repository) {
+		this.flightRepository = repository;
+	}
 
-	public List<Flight> getFlights(String origin) {
+	public Iterable<Flight> getFlights(String origin) {
 		doSomeWorkNewSpan();
-		return buildFlights(origin);
-	}
-
-	private List<Flight> buildFlights(String origin) {
-		List<Flight> result = new ArrayList<Flight>();
-		result.add(newFlight());
-		return result;
-	}
-
-	private Flight newFlight() {
-		Flight flight = new Flight();
-		flight.setAirline("Deltoid");
-		flight.setDepartureTime(new Date());
-		flight.setOrigin("SEA");
-		flight.setDestination("LAS");
-		return flight;
+		return flightRepository.findAll();
 	}
 
 	@WithSpan

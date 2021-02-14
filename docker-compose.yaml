@@ -53,6 +53,10 @@ services:
     image: "mnadeem/boot-otel-tempo-provider1:0.0.1-SNAPSHOT"
     ports:
       - "8090:8090"
+    environment:
+      PROVIDER1_DB_URL: jdbc:postgresql://provider1-db:5432/provider1
+      PROVIDER1_DB_USER: postgres
+      PROVIDER1_DB_PASS: postgrespassword
     depends_on:
       - tempo
 
