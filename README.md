@@ -59,7 +59,7 @@ Copy the trace id
 
 ![](docs/trace-id.png)
 
-Get the trace information
+Get the trace information Using **Jaeger**
 
 ![](docs/jaeger-trace.png)
 
