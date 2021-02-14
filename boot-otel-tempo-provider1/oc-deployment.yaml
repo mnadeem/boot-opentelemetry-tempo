@@ -52,17 +52,17 @@ objects:
                 valueFrom:
                   configMapKeyRef:
                     name: app-config
-                    key: CDR_DB_URL
+                    key: PROVIDER1_DB_URL
               - name: PROVIDER1_DB_USER
                 valueFrom:
                   configMapKeyRef:
                     name: app-config
-                    key: CDR_DB_USER
+                    key: PROVIDER1_DB_USER
               - name: PROVIDER1_DB_PASS
                 valueFrom:
                  secretKeyRef:
                    name: app-secret
-                   key:  CDR_DB_PASS
+                   key:  PROVIDER1_DB_PASS
               - name: POD_NAME
                 valueFrom:
                   fieldRef:
