@@ -3,7 +3,6 @@ ENV APP_NAME boot-otel-tempo-provider1
 
 COPY ./target/${APP_NAME}-*.jar ${APP_HOME}/${APP_NAME}.jar
 
-
 # EXPOSE 5000 5001
 # ENV JAVA_TOOL_OPTIONS "-Dcom.sun.management.jmxremote.ssl=false \
 # -Dcom.sun.management.jmxremote.authenticate=false \

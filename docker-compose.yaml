@@ -2,6 +2,45 @@ version: "3.8"
 
 services:
 
+  loki:
+    image: grafana/loki:2.1.0
+    command: -config.file=/etc/loki/loki-local.yaml
+    ports:
+      - "3101:3100"                                   # loki needs to be exposed so it receives logs
+    environment:
+      - JAEGER_AGENT_HOST=tempo
+      - JAEGER_ENDPOINT=http://tempo:14268/api/traces # send traces to Tempo
+      - JAEGER_SAMPLER_TYPE=const
+      - JAEGER_SAMPLER_PARAM=1
+    volumes:
+      - ./etc/loki-local.yaml:/etc/loki/loki-local.yaml
+      - ./data/loki-data:/tmp/loki
+
+  provider1-db:
+    image: postgres
+    restart: always
+    environment:
+      - POSTGRES_DB=provider1
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgrespassword
+      - PGDATA=/var/lib/postgresql/data/pgdata
+    ports:
+      - 5432:5432
+    volumes:
+      - ./boot-otel-tempo-provider1/db/data:/var/lib/postgresql
+      - ./boot-otel-tempo-provider1/db/scripts/init.sql:/docker-entrypoint-initdb.d/init.sql
+
+  pgadmin:
+    image: dpage/pgadmin4
+    ports:
+      - 7070:80
+    restart: unless-stopped
+    environment:
+      PGADMIN_DEFAULT_EMAIL: pgadmin4@pgadmin.org
+      PGADMIN_DEFAULT_PASSWORD: admin
+    depends_on:
+      - provider1-db
+
   tempo:
     image: grafana/tempo:latest
     command: ["-config.file=/etc/tempo.yaml"]
@@ -23,31 +62,6 @@ services:
       - "16686:16686"  # jaeger-ui
     depends_on:
       - tempo
-
-  provider1-db:
-    image: postgres
-    restart: always
-    environment:
-      - POSTGRES_DB=provider1
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=postgrespassword
-      - PGDATA=/var/lib/postgresql/data/pgdata
-    ports:
-      - 5432:5432
-    volumes:
-      - ./boot-otel-tempo-provider1/db/data:/var/lib/postgresql
-      - ./boot-otel-tempo-provider1/db/scripts/init.sql:/docker-entrypoint-initdb.d/init.sql
-
-  pgadmin:
-    image: dpage/pgadmin4
-    depends_on:
-      - provider1-db
-    ports:
-      - 7070:80
-    environment:
-      PGADMIN_DEFAULT_EMAIL: pgadmin4@pgadmin.org
-      PGADMIN_DEFAULT_PASSWORD: admin
-    restart: unless-stopped
 
   boot-otel-tempo-provider1:
     image: "mnadeem/boot-otel-tempo-provider1:0.0.1-SNAPSHOT"
@@ -95,20 +109,6 @@ services:
       - "9090:9090"
     depends_on:
       - boot-otel-tempo-api
-
-  loki:
-    image: grafana/loki:2.1.0
-    command: -config.file=/etc/loki/loki-local.yaml
-    ports:
-      - "3101:3100"                                   # loki needs to be exposed so it receives logs
-    environment:
-      - JAEGER_AGENT_HOST=tempo
-      - JAEGER_ENDPOINT=http://tempo:14268/api/traces # send traces to Tempo
-      - JAEGER_SAMPLER_TYPE=const
-      - JAEGER_SAMPLER_PARAM=1
-    volumes:
-      - ./etc/loki-local.yaml:/etc/loki/loki-local.yaml
-      - ./data/loki-data:/tmp/loki
 
   grafana:
     image: grafana/grafana:7.4.0-ubuntu

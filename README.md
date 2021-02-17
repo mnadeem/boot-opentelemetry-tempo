@@ -56,36 +56,40 @@ docker stack rm trace
 ````
 # Tracing
 
-Access the endpoint
+[Access the endpoint](http://localhost:8080/flights)
 
-![](docs/access-flights.png)
+![](docs/img/access-flights.png)
 
-Copy the trace id
+View the log and trace in [Grafana](http://localhost:3000/explore)
 
-![](docs/trace-id.png)
-
-Get the trace information Using **Jaeger**
-
-![](docs/jaeger-trace.png)
+![](docs/img/grafana-loki-trace.png)
 
 
-**Trace can be viewed in grafana as well**
+Get the trace information Using **[Jaeger](http://localhost:16686/search)** as well
 
-![](docs/grafana-trace.png)
+![](docs/img/jaeger-trace.png)
 
 
 # Prometheus Metrics
 
-![](docs/prometheus-metrics.png)
+View the metrics in [prometheus](http://localhost:9090/graph?g0.expr=&g0.tab=1&g0.stacked=0&g0.range_input=1h)
+
+![](docs/img/prometheus-metrics.png)
+
+You can view it in [Grafana](http://localhost:3000/explore?orgId=1&left=%5B%22now-1h%22,%22now%22,%22Prometheus%22,%7B%22expr%22:%22http_server_requests_seconds_count%22,%22requestId%22:%22Q-0a6b4a46-2eeb-428a-b98d-0170a5fe4900-0A%22%7D%5D) as well
+
+![](docs/img/grafana-prom-metrics.png)
 
 
 # Connecting To PostgreSQL DB
 
-![](docs/pgAdminlogin.png)
+[Connect](http://localhost:7070/login?next=%2F)
 
-![](docs/pgAdmingServer.png)
+![](docs/img/pgAdminlogin.png)
 
-![](docs/pgAdminDb.png)
+![](docs/img/pgAdmingServer.png)
+
+![](docs/img/pgAdminDb.png)
 
 
 # Credits
