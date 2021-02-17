@@ -98,3 +98,6 @@ You can view it in [Grafana](http://localhost:3000/explore?orgId=1&left=%5B%22no
 * [otel-demo](https://github.com/williewheeler/otel-demo)
 * [java-agent-spring-boot-example](https://github.com/objectiser/java-agent-spring-boot-example)
 
+
+# Also See
+* [Nodejs Opentelemetry Tempo](https://github.com/mnadeem/nodejs-opentelemetry-tempo)
