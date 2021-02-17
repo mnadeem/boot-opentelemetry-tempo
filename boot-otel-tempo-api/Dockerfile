@@ -20,4 +20,4 @@ ENV JAVA_OPTS "${JAVA_OPTS} \
   -Dotel.metrics.exporter=none \
   -Dotel.resource.attributes="service.name=${APP_NAME}" \
   -Dotel.javaagent.debug=false \
-  -javaagent:${APP_HOME}/${OTEL_JAR_FILE}"
+  -javaagent:${APP_HOME}/${OTEL_AGENT_JAR_FILE}"
