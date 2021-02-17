@@ -15,9 +15,9 @@ EXPOSE 8090
 # OpenTelemetry:
 # https://github.com/open-telemetry/opentelemetry-java-instrumentation
 ENV JAVA_OPTS "${JAVA_OPTS} \
-  -Dotel.trace.exporter=jaeger \
+  -Dotel.traces.exporter=jaeger \
   -Dotel.exporter.jaeger.endpoint=tempo:14250 \
   -Dotel.metrics.exporter=none \
   -Dotel.resource.attributes="service.name=${APP_NAME}" \
   -Dotel.javaagent.debug=false \
-  -javaagent:${APP_HOME}/${OTEL_JAR_FILE}"
+  -javaagent:${APP_HOME}/${OTEL_AGENT_JAR_FILE}"
