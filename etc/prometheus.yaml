@@ -24,3 +24,8 @@ scrape_configs:
     metrics_path: /actuator/prometheus
     static_configs:
     - targets: ['boot-otel-tempo-api:8080']
+
+  - job_name: 'volume_exporter'
+    metrics_path: /metrics
+    static_configs:
+    - targets: ['volume_exporter:9888']
