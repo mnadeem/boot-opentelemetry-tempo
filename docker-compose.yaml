@@ -98,6 +98,16 @@ services:
       - boot-otel-tempo-api
       - loki
 
+  volume_exporter:
+    image: mnadeem/volume_exporter
+    command: ["--volume-dir=tempo:/tmp/tempo", "--volume-dir=logs:/app/logs", "--volume-dir=loki:/tmp/loki"]
+    volumes:
+      - ./data/logs:/app/logs
+      - ./data/tempo-data:/tmp/tempo
+      - ./data/loki-data:/tmp/loki
+    ports:
+      - 9889:9888
+
   prometheus:
     image: prom/prometheus:latest
     volumes:
@@ -109,6 +119,7 @@ services:
       - "9090:9090"
     depends_on:
       - boot-otel-tempo-api
+      - volume_exporter
 
   grafana:
     image: grafana/grafana:7.4.0-ubuntu
