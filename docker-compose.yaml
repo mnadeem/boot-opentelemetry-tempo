@@ -16,6 +16,22 @@ services:
       - ./etc/loki-local.yaml:/etc/loki/loki-local.yaml
       - ./data/loki-data:/tmp/loki
 
+  rabbitmq:
+    image: rabbitmq:3.7.28-management
+    #container_name: rabbitmq
+    volumes:
+        - ./etc/rabbitmq/:/etc/rabbitmq/
+        - ./data/rabbitmq/data/:/var/lib/rabbitmq/
+        - ./data/rabbitmq/logs/:/var/log/rabbitmq/
+    environment:
+        RABBITMQ_ERLANG_COOKIE: ${RABBITMQ_ERLANG_COOKIE:-secret_cookie}
+        RABBITMQ_DEFAULT_USER: ${RABBITMQ_DEFAULT_USER:-admin}
+        RABBITMQ_DEFAULT_PASS: ${RABBITMQ_DEFAULT_PASS:-admin}
+    ports:
+        - 5672:5672
+        - 15672:15672
+        - 15692:15692
+
   provider1-db:
     image: postgres
     restart: always
