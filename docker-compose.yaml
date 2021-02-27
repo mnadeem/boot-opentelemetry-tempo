@@ -28,9 +28,9 @@ services:
         RABBITMQ_DEFAULT_USER: ${RABBITMQ_DEFAULT_USER:-admin}
         RABBITMQ_DEFAULT_PASS: ${RABBITMQ_DEFAULT_PASS:-admin}
     ports:
-        - 5672:5672
-        - 15672:15672
-        - 15692:15692
+        - 5672:5672    #amqp
+        - 15672:15672  #http
+        - 15692:15692  #prometheus
 
   provider1-db:
     image: postgres
