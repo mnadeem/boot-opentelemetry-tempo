@@ -26,6 +26,7 @@ import io.opentelemetry.example.flight.service.FlightService;
 public class FlightMQConsumer {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(FlightMQConsumer.class);
+	private Tracer tracer = GlobalOpenTelemetry.getTracer("io.opentelemetry.javaagent.rabbitmq");
 
 	@Autowired
 	private FlightService flightService;
@@ -36,16 +37,14 @@ public class FlightMQConsumer {
 	@RabbitListener(queues = "#{'${rabbitmq.flight.received.queue}'}")
 	public void consumeMessage(String flightMessage, Message message) {
 		LOGGER.trace("Message received: {} ", flightMessage);
-		
+
 		MessageProperties messageProperties = message.getMessageProperties();
 
 		Context extractedContext = extractContext(messageProperties);
 
-		Tracer tracer = GlobalOpenTelemetry.getTracer("io.opentelemetry.javaagent.rabbitmq");
-
 		Span serverSpan = null;
 		try (Scope scope = extractedContext.makeCurrent()) {
-			serverSpan = buildSpan(messageProperties, tracer);
+			serverSpan = buildSpan(messageProperties);
 			try {
 				Flight flight = create(flightMessage);
 				flightService.process(flight);
@@ -61,7 +60,8 @@ public class FlightMQConsumer {
 		}
 	}
 
-	private Span buildSpan(MessageProperties messageProperties, Tracer tracer) {
+	private Span buildSpan(MessageProperties messageProperties) {
+
 		// Automatically use the extracted SpanContext as parent.
 		Span serverSpan = tracer.spanBuilder(spanNameOnGet(messageProperties.getConsumerQueue()))
 				.setSpanKind(Span.Kind.CONSUMER)
