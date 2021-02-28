@@ -8,21 +8,28 @@
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
 
-	<artifactId>boot-otel-tempo-api</artifactId>
-	
-	<name>boot-otel-tempo-api</name>
-	<description>Project demonstrating OpenTelemetry Instrumentation : api</description>
+	<artifactId>boot-otel-tempo-mq-consumer</artifactId>
+
+	<name>boot-otel-tempo-mq-consumer</name>
+	<description>Project demonstrating OpenTelemetry Instrumentation : mq-consumer</description>
 
 	<dependencies>
+	
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
+
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-amqp</artifactId>
 		</dependency>
-		
+		<!--  
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-data-redis</artifactId>
+		</dependency>
+		-->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-actuator</artifactId>
@@ -49,6 +56,7 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+
 	</dependencies>
 
 	<build>
@@ -59,7 +67,7 @@
 				<configuration>
 					<fork>true</fork>
       				<skip>false</skip>
-					<mainClass>io.opentelemetry.example.BootOtelTempoApiApplication</mainClass>
+					<mainClass>io.opentelemetry.example.BootOtelTempoMqConsumerApplication</mainClass>
 	                <argLine>
 	                    -javaagent:../boot-otel-tempo-docker/agent/opentelemetry-javaagent-all.jar 
 	                    -Dotel.trace.exporter=jaeger 

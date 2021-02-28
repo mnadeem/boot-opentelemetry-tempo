@@ -18,7 +18,7 @@ services:
 
   rabbitmq:
     image: rabbitmq:3.7.28-management
-    #container_name: rabbitmq
+    container_name: rabbitmq
     volumes:
         - ./etc/rabbitmq/:/etc/rabbitmq/
         - ./data/rabbitmq/data/:/var/lib/rabbitmq/
@@ -79,6 +79,20 @@ services:
     depends_on:
       - tempo
 
+  boot-otel-tempo-mq-consumer:
+    image: "mnadeem/boot-otel-tempo-mq-consumer:0.0.1-SNAPSHOT"
+    command: '/app/bin/wait-for.sh rabbitmq:5672 -- sh /app/bin/start-app.sh'
+    ports:
+      - "8091:8091"
+    environment:
+      RMQ_USER: ${RABBITMQ_DEFAULT_USER:-admin}
+      RMQ_PASS: ${RABBITMQ_DEFAULT_PASS:-admin}
+    volumes:
+      - ./data/logs:/app/logs
+      - ./etc/wait-for.sh:/app/bin/wait-for.sh   #https://github.com/eficode/wait-for
+    depends_on:
+      - rabbitmq
+
   boot-otel-tempo-provider1:
     image: "mnadeem/boot-otel-tempo-provider1:0.0.1-SNAPSHOT"
     ports:
@@ -99,10 +113,13 @@ services:
       - "8080:8080"
     environment:
       PROVIDER1_URL_BASE: "http://boot-otel-tempo-provider1:8090"
+      RMQ_USER: ${RABBITMQ_DEFAULT_USER:-admin}
+      RMQ_PASS: ${RABBITMQ_DEFAULT_PASS:-admin}
     volumes:
       - ./data/logs:/app/logs
     depends_on:
       - boot-otel-tempo-provider1
+      - boot-otel-tempo-mq-consumer
 
   promtail:
     image: grafana/promtail:master-ee9c629

@@ -75,6 +75,7 @@
 		<module>boot-otel-tempo-docker</module>
 		<module>boot-otel-tempo-api</module>
 		<module>boot-otel-tempo-provider1</module>
+		<module>boot-otel-tempo-mq-consumer</module>
 	</modules>
 
 </project>
