@@ -80,7 +80,13 @@ View the log and trace in [Grafana](http://localhost:3000/explore)
 
 Get the trace information Using **[Jaeger](http://localhost:16686/search)** as well
 
+**Basic Trace**
+
 ![](docs/img/jaeger-trace.png)
+
+**Complex Trace**
+
+![](docs/img/jaeger-trace-complex.png)
 
 
 # Prometheus Metrics
