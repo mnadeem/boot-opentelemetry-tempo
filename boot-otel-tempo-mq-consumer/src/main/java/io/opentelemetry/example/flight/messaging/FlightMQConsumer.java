@@ -35,29 +35,18 @@ public class FlightMQConsumer {
 
 	@RabbitListener(queues = "#{'${rabbitmq.flight.received.queue}'}")
 	public void consumeMessage(String flightMessage, Message message) {
+		LOGGER.trace("Message received: {} ", flightMessage);
+		
 		MessageProperties messageProperties = message.getMessageProperties();
 
-		Context extractedContext = GlobalOpenTelemetry.getPropagators().getTextMapPropagator()
-				.extract(Context.current(), messageProperties.getHeaders(), new RabbitTextMapExtractAdapter());
+		Context extractedContext = extractContext(messageProperties);
 
 		Tracer tracer = GlobalOpenTelemetry.getTracer("io.opentelemetry.javaagent.rabbitmq");
 
 		Span serverSpan = null;
 		try (Scope scope = extractedContext.makeCurrent()) {
-			// Automatically use the extracted SpanContext as parent.
-			serverSpan = tracer.spanBuilder(spanNameOnGet(messageProperties.getConsumerQueue()))
-					.setSpanKind(Span.Kind.CONSUMER)
-					.setAttribute(SemanticAttributes.MESSAGING_SYSTEM, "rabbitmq")
-					.setAttribute(SemanticAttributes.MESSAGING_DESTINATION_KIND, "queue")
-					.setAttribute(SemanticAttributes.MESSAGING_DESTINATION,
-							messageProperties.getReceivedExchange())
-					.setAttribute("rabbitmq.routing_key", messageProperties.getReceivedRoutingKey())
-					.setAttribute(SemanticAttributes.MESSAGING_MESSAGE_PAYLOAD_SIZE_BYTES,
-							messageProperties.getContentLength())
-					.setAttribute(SemanticAttributes.MESSAGING_OPERATION, "receive").startSpan();
+			serverSpan = buildSpan(messageProperties, tracer);
 			try {
-
-				LOGGER.trace("Message received: {} ", flightMessage);
 				Flight flight = create(flightMessage);
 				flightService.process(flight);
 				LOGGER.debug("Message processed successfully");
@@ -70,6 +59,26 @@ public class FlightMQConsumer {
 				serverSpan.end();
 			}
 		}
+	}
+
+	private Span buildSpan(MessageProperties messageProperties, Tracer tracer) {
+		// Automatically use the extracted SpanContext as parent.
+		Span serverSpan = tracer.spanBuilder(spanNameOnGet(messageProperties.getConsumerQueue()))
+				.setSpanKind(Span.Kind.CONSUMER)
+				.setAttribute(SemanticAttributes.MESSAGING_SYSTEM, "rabbitmq")
+				.setAttribute(SemanticAttributes.MESSAGING_DESTINATION_KIND, "queue")
+				.setAttribute(SemanticAttributes.MESSAGING_DESTINATION,
+						messageProperties.getReceivedExchange())
+				.setAttribute("rabbitmq.routing_key", messageProperties.getReceivedRoutingKey())
+				.setAttribute(SemanticAttributes.MESSAGING_MESSAGE_PAYLOAD_SIZE_BYTES,
+						messageProperties.getContentLength())
+				.setAttribute(SemanticAttributes.MESSAGING_OPERATION, "receive").startSpan();
+		return serverSpan;
+	}
+
+	private Context extractContext(MessageProperties messageProperties) {
+		return GlobalOpenTelemetry.getPropagators().getTextMapPropagator()
+				.extract(Context.current(), messageProperties.getHeaders(), new RabbitTextMapExtractAdapter());
 	}
 
 	public String spanNameOnGet(String queue) {
