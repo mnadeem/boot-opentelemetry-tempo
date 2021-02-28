@@ -93,17 +93,22 @@ services:
 
   boot-otel-tempo-mq-consumer:
     image: "mnadeem/boot-otel-tempo-mq-consumer:0.0.1-SNAPSHOT"
-    command: '/app/bin/wait-for.sh rabbitmq:5672 -- sh /app/bin/start-app.sh'
+    command: '/app/bin/wait-for.sh rabbitmq:5672 -t 50 -- sh /app/bin/start-app.sh'
     ports:
       - "8091:8091"
     environment:
       RMQ_USER: ${RABBITMQ_DEFAULT_USER:-admin}
       RMQ_PASS: ${RABBITMQ_DEFAULT_PASS:-admin}
+      REDIS_CLUSTER_NODES: ${REDIS_CLUSTER_NODES:-redis:6379}
+      REDIS_CLUSTER_MAX_REDIRECTS: ${REDIS_CLUSTER_MAX_REDIRECTS:-3}
+      REDIS_HOST: ${REDIS_HOST:-redis}
+      REDIS_PORT: ${REDIS_PORT:-6379}
     volumes:
       - ./data/logs:/app/logs
       - ./etc/wait-for.sh:/app/bin/wait-for.sh   #https://github.com/eficode/wait-for
     depends_on:
       - rabbitmq
+      - redis
 
   boot-otel-tempo-provider1:
     image: "mnadeem/boot-otel-tempo-provider1:0.0.1-SNAPSHOT"
