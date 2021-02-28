@@ -33,4 +33,5 @@ build/
 .vscode/
 /data/tempo-data/
 /data/loki-data/
+/data/rabbitmq/
 /data/logs/
