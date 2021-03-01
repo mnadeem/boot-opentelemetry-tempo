@@ -1,4 +1,4 @@
-package io.opentelemetry.example.flight.messaging.otel;
+package io.opentelemetry.example.otel;
 
 import io.opentelemetry.context.propagation.TextMapPropagator;
 import java.util.Map;
