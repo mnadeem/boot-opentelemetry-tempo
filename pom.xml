@@ -21,6 +21,7 @@
 	<properties>
 		<java.version>1.8</java.version>
 		<opentelemetry.version>0.17.1</opentelemetry.version>
+		<opentelemetry-agent.version>0.17.0</opentelemetry-agent.version>
 		<docker-maven-plugin.version>0.34.1</docker-maven-plugin.version>
 	</properties>
 
