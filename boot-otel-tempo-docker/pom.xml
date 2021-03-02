@@ -33,7 +33,7 @@
 							<artifactItem>
 								<groupId>io.opentelemetry.javaagent</groupId>
 								<artifactId>opentelemetry-javaagent</artifactId>
-								<version>0.15.0</version>
+								<version>${opentelemetry-agent.version}</version>
 								<type>jar</type>
 								<overWrite>false</overWrite>
 								<!-- <outputDirectory>${project.build.directory}/agent</outputDirectory>   -->
