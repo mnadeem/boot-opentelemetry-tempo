@@ -67,7 +67,7 @@
       				<skip>false</skip>
 					<mainClass>io.opentelemetry.example.BootOtelTempoProvider1Application</mainClass>
 	                <argLine>
-	                    -javaagent:../boot-otel-tempo-docker/agent/opentelemetry-javaagent-all.jar 
+	                    -javaagent:../boot-otel-tempo-docker/agent/opentelemetry-javaagent-${opentelemetry-agent.version}.jar
 	                    -Dotel.trace.exporter=jaeger 
 	                    -Dotel.exporter.jaeger.endpoint=localhost:14250  
 	                    -Dotel.resource.attributes=service.name=${project.artifactId} 
