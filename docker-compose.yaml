@@ -3,7 +3,7 @@ version: "3.8"
 services:
 
   loki:
-    image: grafana/loki:2.1.0
+    image: grafana/loki:2.2.0
     command: -config.file=/etc/loki/loki-local.yaml
     ports:
       - "3101:3100"                                   # loki needs to be exposed so it receives logs
@@ -89,7 +89,7 @@ services:
       - boot-otel-tempo-provider1
 
   promtail:
-    image: grafana/promtail:master-ee9c629
+    image: grafana/promtail:2.2.0
     command: -config.file=/etc/promtail/promtail-local.yaml
     volumes:
       - ./etc/promtail-local.yaml:/etc/promtail/promtail-local.yaml
