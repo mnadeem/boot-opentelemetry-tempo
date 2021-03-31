@@ -47,11 +47,12 @@ services:
     volumes:
       - ./etc/tempo-local.yaml:/etc/tempo.yaml
       - ./data/tempo-data:/tmp/tempo
+    restart: unless-stopped  
     ports:
-      - "14268"  # jaeger ingest, Jaeger - Thrift HTTP
-      - "14250"  # Jaeger - GRPC
-      - "55680"  # OpenTelemetry
-      - "3100"   # tempo
+      - "14268:14268"  # jaeger ingest, Jaeger - Thrift HTTP
+      - "14250:14250"  # Jaeger - GRPC
+      - "55680:55680"  # OpenTelemetry
+      - "3102:3100"   # tempo
 
   tempo-query:
     image: grafana/tempo-query:latest
