@@ -42,7 +42,7 @@ services:
       - provider1-db
 
   tempo:
-    image: grafana/tempo:latest
+    image: grafana/tempo:0.7.0
     command: ["-config.file=/etc/tempo.yaml"]
     volumes:
       - ./etc/tempo-local.yaml:/etc/tempo.yaml
@@ -54,7 +54,7 @@ services:
       - "3100"   # tempo
 
   tempo-query:
-    image: grafana/tempo-query:latest
+    image: grafana/tempo-query:0.7.0
     command: ["--grpc-storage-plugin.configuration-file=/etc/tempo-query.yaml"]
     volumes:
       - ./etc/tempo-query.yaml:/etc/tempo-query.yaml
