@@ -36,8 +36,8 @@ storage:
     backend: local                     # backend configuration to use
     wal:
       path: /tmp/tempo/wal            # where to store the the wal locally
-      bloom_filter_false_positive: .05 # bloom filter false positive rate.  lower values create larger filters but fewer false positives
-      index_downsample: 10             # number of traces per index record
+      #bloom_filter_false_positive: .05 # bloom filter false positive rate.  lower values create larger filters but fewer false positives
+      #index_downsample: 10             # number of traces per index record
     local:
       path: /tmp/tempo/blocks
     pool:
