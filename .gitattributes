@@ -1,1 +1,1 @@
-boot-opentelemetry-tempo/boot-otel-tempo-docker/scripts/*.sh eol=lf
+boot-otel-tempo-docker/scripts/*.sh eol=lf
