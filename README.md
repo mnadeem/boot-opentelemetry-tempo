@@ -25,7 +25,7 @@ mvn clean package docker:build
 Images
 
 ````bash
-docker image ls
+docker image ls | grep mnadeem
 
 ````
 
