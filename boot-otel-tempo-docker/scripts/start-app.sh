@@ -1,5 +1,7 @@
 #!/bin/bash
 
+ulimit -n 10000
+
 [ -z "$MIN_HEAP_SIZE" ] && MIN_HEAP_SIZE=40M
 [ -z "$MAX_HEAP_SIZE" ] && MAX_HEAP_SIZE=512M
 [ -z "$THREADSTACK_SIZE" ] && THREADSTACK_SIZE=228k
